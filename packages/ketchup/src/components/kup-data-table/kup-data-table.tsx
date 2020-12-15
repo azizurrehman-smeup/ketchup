@@ -3865,6 +3865,9 @@ export class KupDataTable {
                         label="Search..."
                         icon="magnify"
                         initialValue={this.globalFilterValue}
+                        onKupTextFieldInput={(event) =>
+                            this.onGlobalFilterChange(event)
+                        }
                         onKupTextFieldSubmit={(event) =>
                             this.onGlobalFilterChange(event)
                         }
