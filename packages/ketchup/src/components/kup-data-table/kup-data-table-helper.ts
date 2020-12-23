@@ -29,7 +29,6 @@ import {
     isValidFormattedStringDate,
     formattedStringToDefaultUnformattedStringDate,
     formattedStringToUnformattedStringNumber,
-    isValidFormattedStringNumber,
 } from '../../utils/utils';
 import {
     isFilterCompliantForValue,
@@ -422,25 +421,18 @@ export function isFilterCompliantForCell(cellValue: Cell, filterValue: string) {
     if (!cellValue) {
         return false;
     }
-
     filterValue = normalizeValue(filterValue, cellValue.obj);
     let value = cellValue.value;
-
-    if (isNumber(cellValue.obj)) {
-        value = normalizeValue(value, cellValue.obj);
-    }
     if (isDate(cellValue.obj)) {
         if (
             !isValidStringDate(filterValue, ISO_DEFAULT_DATE_FORMAT) &&
             !isValidStringDate(filterValue)
         ) {
-            if (isValidStringDate(cellValue.value, ISO_DEFAULT_DATE_FORMAT)) {
-                value = changeDateTimeFormat(
-                    cellValue.value,
-                    ISO_DEFAULT_DATE_FORMAT,
-                    getCurrentDateFormatFromBrowserLocale()
-                );
-            }
+            value = changeDateTimeFormat(
+                cellValue.value,
+                ISO_DEFAULT_DATE_FORMAT,
+                getCurrentDateFormatFromBrowserLocale()
+            );
         }
     }
     return isFilterCompliantForValue(value, filterValue);
@@ -800,11 +792,12 @@ export function normalizeValue(value: string, smeupObj: any): string {
         }
     }
     if (isNumber(smeupObj)) {
-        if (isValidFormattedStringNumber(value, smeupObj ? smeupObj.p : '')) {
-            newValue = formattedStringToUnformattedStringNumber(
-                value,
-                smeupObj ? smeupObj.p : ''
-            );
+        let tmpStr = formattedStringToUnformattedStringNumber(
+            value,
+            smeupObj ? smeupObj.p : ''
+        );
+        if (isNumberThisString(tmpStr)) {
+            newValue = tmpStr;
         }
     }
     return newValue;

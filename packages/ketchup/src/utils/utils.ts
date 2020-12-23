@@ -101,9 +101,6 @@ export function formatSize(size: any) {
 }
 
 export function getCurrentLocale(suffix?: string): string {
-    if (navigator == null || navigator.language == null) {
-        return 'en-US' + (suffix != null ? suffix : '');
-    }
     return navigator.language + (suffix != null ? suffix : '');
 }
 
@@ -189,27 +186,6 @@ export function isEmpty(obj: any) {
         obj === null ||
         (Object.keys(obj).length === 0 && obj.constructor === Object)
     );
-}
-
-/**
- * @param value number as string, formatted by actual browser locale
- * @param type - type of number for calculate suffix
- * @returns true if number string in input is a valid number
- */
-export function isValidFormattedStringNumber(
-    value: string,
-    type: string
-): boolean {
-    if (value == null || value.trim() == '') {
-        return false;
-    }
-
-    let tmpStr = formattedStringToUnformattedStringNumber(value, type);
-
-    if (isNumber(tmpStr)) {
-        return true;
-    }
-    return false;
 }
 
 export function isNumber(value: any): boolean {
@@ -302,7 +278,7 @@ export function formattedStringToUnformattedStringNumber(
     type: string
 ): string {
     if (input == null || input.trim() == '') {
-        return '';
+        input = '0';
     }
 
     let suffix = getNumericValueSuffixByType(type);
