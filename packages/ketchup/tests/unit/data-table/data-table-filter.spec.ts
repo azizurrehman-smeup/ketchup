@@ -202,7 +202,7 @@ describe('kup-data-table filters rows', () => {
                                 cells[columnToFilterOn].value,
                                 filterText
                             );
-                            if(!compareResult && cells[columnToFilterOn].obj){
+                            if (!compareResult && cells[columnToFilterOn].obj) {
                                 compareResult = compareFunction(
                                     cells[columnToFilterOn].obj.k,
                                     filterText
@@ -223,7 +223,7 @@ describe('kup-data-table filters rows', () => {
                             row.cells[columnToFilterOn].value,
                             filterText
                         );
-                        if(!compareResult && row.cells[columnToFilterOn].obj){
+                        if (!compareResult && row.cells[columnToFilterOn].obj) {
                             compareResult = compareFunction(
                                 row.cells[columnToFilterOn].obj.k,
                                 filterText
